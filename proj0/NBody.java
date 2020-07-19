@@ -57,7 +57,8 @@ public class NBody {
     for (int i = 0; i < bodyArr.length; i++) {
       StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
       bodyArr[i].xxPos, bodyArr[i].yyPos, bodyArr[i].xxVel,
-      bodyArr[i].yyVel, bodyArr[i].mass, bodyArr[i].imgFileName);   
+      bodyArr[i].yyVel, bodyArr[i].mass, bodyArr[i].imgFileName);
     }
   }
+  
 }

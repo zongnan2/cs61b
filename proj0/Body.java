@@ -84,4 +84,5 @@ public class Body {
     String imgPlanet = "images/"+imgFileName;
     StdDraw.picture(xxPos, yyPos, imgPlanet);
   }
+  
 }
