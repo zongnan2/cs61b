@@ -2,12 +2,12 @@
  * LinkedListDeque stores item in type T as a linked list.
  * @author Zongnan Chen
  */
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T>{
     /**
      * Nested class Node that contains the inner
      * structure of the LinkedListDeque.
      */
-    public class Node {
+    private class Node {
         private Node prev;
         private T currentItem;
         private Node next;
@@ -47,7 +47,7 @@ public class LinkedListDeque<T> {
             q = q.next;
         }
     }
-
+    @Override
     public void addFirst(T item) {
         Node curNode = new Node(item);
         curNode.next = sentinel.next;
@@ -56,7 +56,7 @@ public class LinkedListDeque<T> {
         curNode.prev = sentinel;
         size += 1;
     }
-
+    @Override
     public void addLast(T item) {
         Node curNode = new Node(item);
         curNode.prev = sentinel.prev;
@@ -66,11 +66,11 @@ public class LinkedListDeque<T> {
         size += 1;
     }
 
-
+    @Override
     public int size() {
         return size;
     }
-
+    @Override
     public void printDeque() {
         Node p = sentinel;
         while(!p.next.equals(sentinel)) {
@@ -79,7 +79,7 @@ public class LinkedListDeque<T> {
         }
         System.out.println();
     }
-
+    @Override
     public T removeFirst() {
         if(size == 0) {
             return null;
@@ -91,7 +91,7 @@ public class LinkedListDeque<T> {
         temp.next = null;
         return temp.currentItem;
     }
-
+    @Override
     public T removeLast() {
         if(size == 0) {
             return null;
@@ -103,7 +103,7 @@ public class LinkedListDeque<T> {
         temp.next = null;
         return temp.currentItem;
     }
-
+    @Override
     public T get(int index) {
         Node p = sentinel;
         for(int i=0; i<=index;i++) {

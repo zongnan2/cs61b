@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.lang.reflect.Array;
 
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T>{
     private T[] elements;
     private int size;
     private int nextFirst;
@@ -10,7 +10,7 @@ public class ArrayDeque<T> {
     public ArrayDeque() {
         elements = (T[]) new Object[8];
         size = 0;
-        nextFirst = 7;
+        nextFirst = elements.length-1;
         nextLast = 0;
     }
 
@@ -24,11 +24,31 @@ public class ArrayDeque<T> {
 
     private void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
-        System.arraycopy(elements,0,temp,0,nextLast);
-        int rearSize = size-nextLast+1;
-        nextFirst = temp.length - rearSize;
-        System.arraycopy(elements,elements.length-rearSize,temp,nextFirst,rearSize);
+        int index;
+        if(nextFirst == elements.length-1) {
+            index = 0;
+        } else {
+            index = nextFirst+1;
+        }
+        int i = 0;
+        while(index != nextLast) {
+            temp[i] = elements[index];
+            i++;
+            if(index == elements.length-1) {
+                index = 0;
+            } else {
+                index ++;
+            }
+        }
+
+        //System.arraycopy(elements,0,temp,0,nextLast);
+        //int rearSize = size-nextLast+1;
+        //nextFirst = temp.length - rearSize;
+        //System.arraycopy(elements,elements.length-rearSize,temp,nextFirst,rearSize);
+        nextFirst = temp.length-1;
+        nextLast = size;
         elements = temp;
+
     }
 
     private void checksize() {
@@ -41,7 +61,7 @@ public class ArrayDeque<T> {
             resize(elements.length/2);
         }
     }
-
+    @Override
     public void addFirst(T item) {
         if(nextFirst == nextLast) {
             resize(elements.length*2);
@@ -54,7 +74,7 @@ public class ArrayDeque<T> {
         }
         size += 1;
     }
-
+    @Override
     public void addLast(T item) {
         if(nextFirst == nextLast) {
             resize(elements.length*2);
@@ -67,18 +87,18 @@ public class ArrayDeque<T> {
         }
         size += 1;
     }
-
+    @Override
     public int size() {
         return size;
     }
-
+    @Override
     public void printDeque() {
         for(int i=0;i<elements.length;i++) {
             System.out.println(elements[i]);
         }
         System.out.println();
     }
-
+    @Override
     public T removeFirst() {
         checksize();
         if(nextFirst == elements.length-1) {
@@ -91,7 +111,7 @@ public class ArrayDeque<T> {
         size -= 1;
         return returnValue;
     }
-
+    @Override
     public T removeLast() {
         checksize();
         if(nextLast == 0) {
@@ -104,7 +124,7 @@ public class ArrayDeque<T> {
         size -= 1;
         return returnValue;
     }
-
+    @Override
     public T get(int index) {
         return elements[index];
     }
