@@ -57,7 +57,9 @@ public class Plip extends Creature {
      * that you get this exactly correct.
      */
     public Color color() {
-        g = 63;
+        r = 99;
+        g = 63 + (int) (energy*96);
+        b = 76;
         return color(r, g, b);
     }
 
@@ -74,7 +76,10 @@ public class Plip extends Creature {
      * private static final variable. This is not required for this lab.
      */
     public void move() {
-        // TODO
+        energy -= 0.15;
+        if(energy < 0) {
+            energy = 0;
+        }
     }
 
 
@@ -82,7 +87,10 @@ public class Plip extends Creature {
      * Plips gain 0.2 energy when staying due to photosynthesis.
      */
     public void stay() {
-        // TODO
+        energy += 0.2;
+        if(energy > 2) {
+            energy = 2;
+        }
     }
 
     /**
@@ -91,7 +99,9 @@ public class Plip extends Creature {
      * Plip.
      */
     public Plip replicate() {
-        return this;
+        energy = 0.5*energy;
+        double babyEnergy = energy;
+        return new Plip(babyEnergy);
     }
 
     /**
@@ -108,23 +118,52 @@ public class Plip extends Creature {
      * for an example to follow.
      */
     public Action chooseAction(Map<Direction, Occupant> neighbors) {
-        // Rule 1
         Deque<Direction> emptyNeighbors = new ArrayDeque<>();
         boolean anyClorus = false;
         // TODO
         // (Google: Enhanced for-loop over keys of NEIGHBORS?)
         // for () {...}
+        for(Direction direction: neighbors.keySet()) {
+            if(neighbors.get(direction).name().equals("empty")) {
+                emptyNeighbors.addLast(direction);
+            } else if(neighbors.get(direction).name().equals("clorus")) {
+                anyClorus = true;
+            }
+        }
 
-        if (false) { // FIXME
-            // TODO
+        // Rule 1
+        if(emptyNeighbors.size() == 0) {
+            return new Action(Action.ActionType.STAY);
         }
 
         // Rule 2
         // HINT: randomEntry(emptyNeighbors)
+        if(energy >= 1){
+            return new Action(Action.ActionType.REPLICATE,randomEntry(emptyNeighbors));
+        }
 
         // Rule 3
+        if(anyClorus) {
+            double randomIndex = Math.random();
+            if(randomIndex >= 0.5) {
+                return new Action(Action.ActionType.MOVE,randomEntry(emptyNeighbors));
+            }
+        }
 
         // Rule 4
         return new Action(Action.ActionType.STAY);
+    }
+
+    private Direction randomEntry(Deque<Direction> a) {
+        int randomIndex = (int) (Math.random()*a.size());
+        Direction toReturn = null;
+        for(Direction item: a) {
+            if(randomIndex > 0) {
+                randomIndex--;
+                continue;
+            }
+            toReturn = item;
+        }
+        return toReturn;
     }
 }

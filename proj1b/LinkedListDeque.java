@@ -89,6 +89,7 @@ public class LinkedListDeque<T> implements Deque<T>{
         temp.next.prev = sentinel;
         temp.prev = null;
         temp.next = null;
+        size -= 1;
         return temp.currentItem;
     }
     @Override
@@ -101,6 +102,7 @@ public class LinkedListDeque<T> implements Deque<T>{
         temp.prev.next = sentinel;
         temp.prev = null;
         temp.next = null;
+        size -= 1;
         return temp.currentItem;
     }
     @Override
