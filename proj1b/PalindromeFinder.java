@@ -4,7 +4,7 @@ public class PalindromeFinder {
         int minLength = 4;
         In in = new In("../library-sp19/data/words.txt");
         Palindrome palindrome = new Palindrome();
-        CharacterComparator a = new OffByN(5);
+        CharacterComparator a = new OffByN(0);
 
         while (!in.isEmpty()) {
             String word = in.readString();

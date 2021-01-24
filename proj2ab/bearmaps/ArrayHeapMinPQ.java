@@ -174,6 +174,6 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
         alphabet.add("England",4);
         alphabet.add("Finland",5);
         alphabet.add("Germany",6);
-        alphabet.changePriority("America",7);
+        alphabet.removeSmallest();
     }
 }
