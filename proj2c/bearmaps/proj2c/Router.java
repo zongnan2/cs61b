@@ -1,5 +1,11 @@
 package bearmaps.proj2c;
 
+import bearmaps.hw4.AStarSolver;
+import bearmaps.hw4.WeightedEdge;
+import bearmaps.hw4.WeirdSolver;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -24,10 +30,10 @@ public class Router {
      */
     public static List<Long> shortestPath(AugmentedStreetMapGraph g, double stlon, double stlat,
                                           double destlon, double destlat) {
-        //long src = g.closest(stlon, stlat);
-        //long dest = g.closest(destlon, destlat);
-        //return new WeirdSolver<>(g, src, dest, 20).solution();
-        return null;
+        long src = g.closest(stlon, stlat);
+        long dest = g.closest(destlon, destlat);
+        return new AStarSolver<>(g, src, dest, 20).solution();
+        //return null;
     }
 
     /**
@@ -35,12 +41,77 @@ public class Router {
      * @param g The graph to use.
      * @param route The route to translate into directions. Each element
      *              corresponds to a node from the graph in the route.
-     * @return A list of NavigatiionDirection objects corresponding to the input
+     * @return A list of NavigationDirection objects corresponding to the input
      * route.
      */
     public static List<NavigationDirection> routeDirections(AugmentedStreetMapGraph g, List<Long> route) {
         /* fill in for part IV */
-        return null;
+
+        List<NavigationDirection> navigator = new ArrayList<>();
+        Long prevNode = null;
+        Long curNode = null;
+        String curWay = "";
+        String prevWay = "";
+        double prevBearing = 1000.0;
+        double curBearing = 1000.0;
+        NavigationDirection recentNavigation = null;
+        double curDistance = 0.0;
+        double initialOff = 0.0;
+        for(Long node: route) {
+            if(route.indexOf(node) == 0) {
+                curNode = node;
+                continue;
+            }
+            prevNode = curNode;
+            curNode = node;
+            curWay = getStreetName(g, prevNode, curNode);
+            curBearing = NavigationDirection.bearing(g.lon(prevNode),g.lon(curNode),g.lat(prevNode),g.lat(curNode));
+            curDistance = curDistance + g.estimatedDistanceToGoal(prevNode,curNode) + initialOff;
+            if(!curWay.equals(prevWay)) {
+                NavigationDirection curNavigation = new NavigationDirection();
+                recentNavigation = curNavigation;
+                curNavigation.way = curWay;
+                curNavigation.distance = g.estimatedDistanceToGoal(prevNode,curNode);
+                initialOff = g.estimatedDistanceToGoal(prevNode,curNode);
+                if(navigator.isEmpty()) {
+                    curNavigation.direction = 0;
+                } else {
+                    curNavigation.direction = NavigationDirection.getDirection(prevBearing, curBearing);
+                }
+                navigator.add(curNavigation);
+                curDistance = 0.0;
+            } else {
+                recentNavigation.distance = curDistance;
+                initialOff = 0.0;
+            }
+            prevBearing = curBearing;
+            prevWay = curWay;
+        }
+        return navigator;
+    }
+
+    private static String getStreetName(AugmentedStreetMapGraph g, Long Node1, Long Node2) {
+        List<WeightedEdge<Long>> allStreets = g.neighbors(Node1);
+        for(WeightedEdge<Long> street: allStreets) {
+            if(street.to().equals(Node2)) {
+                if(street.getName().equals(null)) {
+                    return "Unknown Road";
+                } else {
+                    return street.getName();
+                }
+            }
+        }
+        return "Error";
+    }
+
+    private static double getStreetDistance(AugmentedStreetMapGraph g, Long Node1, Long Node2) {
+        List<WeightedEdge<Long>> allStreets = g.neighbors(Node1);
+        for(WeightedEdge<Long> street: allStreets) {
+            if(street.to().equals(Node2)) {
+                return street.weight();
+            }
+        }
+        return 0.0;
     }
 
     /**
