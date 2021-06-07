@@ -71,6 +71,7 @@ public class TETile {
     }
 
 
+
     /**
      * Draws the tile to the screen at location x, y. If a valid filepath is provided,
      * we draw the image located at that filepath to the screen. Otherwise, we fall
@@ -114,6 +115,8 @@ public class TETile {
         return description;
     }
 
+
+
     /**
      * Creates a copy of the given tile with a slightly different text color. The new
      * color will have a red value that is within dr of the current red value,
@@ -133,6 +136,14 @@ public class TETile {
         Color c = new Color(newRed, newGreen, newBlue);
 
         return new TETile(t, c);
+    }
+
+    public static TETile textRed(TETile t) {
+        return new TETile(t, Color.red);
+    }
+
+    public static TETile backOrange(TETile t) {
+        return new TETile(t.character, t.textColor, Color.orange, t.description, t.filepath);
     }
 
     private static int newColorValue(int v, int dv, Random r) {
@@ -188,5 +199,18 @@ public class TETile {
         }
 
         return copy;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TETile tile = (TETile) o;
+        return (tile.character == character) &&
+                (tile.textColor.equals(textColor)) &&
+                (tile.backgroundColor.equals(backgroundColor)) &&
+                (tile.description.equals(description)) &&
+                (tile.filepath.equals(filepath));
     }
 }

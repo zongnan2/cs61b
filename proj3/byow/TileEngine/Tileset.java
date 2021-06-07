@@ -1,6 +1,7 @@
 package byow.TileEngine;
 
 import java.awt.Color;
+import java.util.Comparator;
 
 /**
  * Contains constant tile objects, to avoid having to remake the same tiles in different parts of
@@ -33,6 +34,15 @@ public class Tileset {
     public static final TETile SAND = new TETile('▒', Color.yellow, Color.black, "sand");
     public static final TETile MOUNTAIN = new TETile('▲', Color.gray, Color.black, "mountain");
     public static final TETile TREE = new TETile('♠', Color.green, Color.black, "tree");
+    public static final TETile GIRL = new TETile('♀', Color.white, Color.black, "girl");
+    public static final TETile BOY = new TETile('♂', Color.white, Color.black, "boy");
+    public static final TETile HEART = new TETile('♡', Color.YELLOW, Color.black, "heart");
+    public static final TETile BABYROCK = new TETile('☆', Color.CYAN, Color.black, "baby rock");
+    public static final TETile ROCK = new TETile('◍', Color.CYAN, Color.black, "rock");
+    public static final TETile SUN = new TETile('◌', Color.yellow, Color.black, "sunlight");
+    public static final TETile MASK = new TETile(' ', Color.gray, Color.gray, "haze");
+    public static final TETile GRENADE = new TETile('☢', Color.orange, Color.black, "grenade");
+    public static final TETile LASER = new TETile('❂', Color.orange, Color.black, "laser");
 }
 
 
