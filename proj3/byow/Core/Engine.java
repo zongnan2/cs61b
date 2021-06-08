@@ -7,7 +7,6 @@ import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.*;
 import java.io.IOException;
-import java.io.StringBufferInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,7 +16,7 @@ import java.util.List;
 public class Engine {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    private static final int TILE_SIZE = 16;
+    private static final int TILE_SIZE = 20;
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
     public static final int menuWidth = 30;
@@ -34,6 +33,12 @@ public class Engine {
     private String selectToDraw = "./byow/Core/select.png";
     private String seedToDraw = "./byow/Core/seed.jpg";
     private String endToDraw = "./byow/Core/end.jpg";
+    private String getObjectToSound = "./byow/Core/getObject.wav";
+    private String grenadeToSound = "./byow/Core/grenade.wav";
+    private String landObjectToSound = "./byow/Core/landObject.wav";
+    private String laserToSound = "./byow/Core/laser2.wav";
+    private int soundStatus;
+
 
 
     /**
@@ -429,6 +434,7 @@ public class Engine {
         for(int i=0;i<action.length();i++) {
             count++;
             damageArea.clear();
+            soundStatus = 0;
             renderAction(finalWorldFrame,action.charAt(i));
             playerStatusUpdate();
         }
@@ -437,6 +443,7 @@ public class Engine {
             renderDamage(finalWorldFrame);
         }
         renderMask(finalWorldFrame);
+        renderSoundEffect();
         return finalWorldFrame;
     }
 
@@ -465,6 +472,25 @@ public class Engine {
             return false;
         }
         return true;
+    }
+
+    private void renderSoundEffect() {
+        switch (soundStatus) {
+            case 1:
+                soundPlay(getObjectToSound);
+                return;
+            case 2:
+                soundPlay(landObjectToSound);
+                return;
+            case 3:
+                soundPlay(laserToSound);
+                return;
+            case 4:
+                soundPlay(grenadeToSound);
+                return;
+            default:
+                return;
+        }
     }
 
     private void renderDamage(TETile[][] board) {
@@ -630,6 +656,7 @@ public class Engine {
                 return;
             case 'e':
                 if(player.getRocks()>0&&board[player.getNext().getX()][player.getNext().getY()].equals(Tileset.GRASS)) {
+                    soundStatus = 2;
                     board[player.getNext().getX()][player.getNext().getY()] = Tileset.ROCK;
                     player.downRocks();
                 }
@@ -696,6 +723,7 @@ public class Engine {
                 return;
             case 'o':
                 if(player2.getRocks()>0&&board[player2.getNext().getX()][player2.getNext().getY()].equals(Tileset.GRASS)) {
+                    soundStatus = 2;
                     board[player2.getNext().getX()][player2.getNext().getY()] = Tileset.ROCK;
                     player2.downRocks();
                 }
@@ -729,6 +757,7 @@ public class Engine {
         List<Point> damageArea = new ArrayList<>();
         if(weaponName.equals("laser")) {
             //Laser
+            soundStatus = 3;
             Point curLoc = new Point(p.getX(),p.getY());
             //1A 2W 3S 4D
             switch (dir) {
@@ -781,6 +810,7 @@ public class Engine {
             }
         } else {
             //grenade
+            soundStatus = 4;
             List<Point> allTargets;
             switch (dir) {
                 case 1:
@@ -915,22 +945,33 @@ public class Engine {
         if(board[targetX][targetY].equals(Tileset.GRASS)) {
             return true;
         } else if(board[targetX][targetY].equals(Tileset.HEART)) {
+            soundStatus = 1;
             p.upLives();
             return true;
         } else if(board[targetX][targetY].equals(Tileset.BABYROCK)) {
+            soundStatus = 1;
             p.upRocks();
             return true;
         } else if(board[targetX][targetY].equals(Tileset.SUN)) {
+            soundStatus = 1;
             p.upSightLevel();
             return true;
         } else if(board[targetX][targetY].equals(Tileset.LASER)) {
+            soundStatus = 1;
             p.addWeapon("laser");
             return true;
         } else if(board[targetX][targetY].equals(Tileset.GRENADE)) {
+            soundStatus = 1;
             p.addWeapon("grenade");
             return true;
         }
         return false;
+    }
+
+    private void soundPlay(String sound) {
+        SoundEffect audio = new SoundEffect();
+        audio.setFile(sound);
+        audio.play();
     }
 
     private void renderAvatar(TETile[][] board, Avatar p) {
@@ -1407,6 +1448,7 @@ public class Engine {
         */
 
 
+
         Engine engine = new Engine();
         engine.interactWithKeyboard();
 
@@ -1422,6 +1464,12 @@ public class Engine {
         }
         */
 
+        /**
+        String fileName = "./byow/Core/sample.wav";
+        SoundEffect audio = new SoundEffect();
+        audio.setFile(fileName);
+        audio.play();
+        */
 
     }
 
