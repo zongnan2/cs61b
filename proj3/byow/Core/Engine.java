@@ -30,6 +30,10 @@ public class Engine {
     private Avatar player2;
     private int count;
     private List<Point> damageArea;
+    private String imageToDraw = "./byow/Core/pubg.jpg";
+    private String selectToDraw = "./byow/Core/select.png";
+    private String seedToDraw = "./byow/Core/seed.jpg";
+    private String endToDraw = "./byow/Core/end.jpg";
 
 
     /**
@@ -101,15 +105,18 @@ public class Engine {
         StdDraw.setXscale(0, menuHeight);
         StdDraw.setYscale(0, menuHeight);
         StdDraw.clear(Color.darkGray);
+        StdDraw.picture(menuWidth/2,menuHeight/2,endToDraw,menuWidth,menuHeight);
         StdDraw.setPenColor(Color.WHITE);
         Font smallFont = new Font("Arial", Font.BOLD, 15);
         StdDraw.setFont(smallFont);
         StdDraw.text(menuWidth/2, menuHeight - 1, "Game finished");
         StdDraw.line(0, menuHeight - 2, menuWidth, menuHeight - 2);
-        StdDraw.filledRectangle(menuWidth/2,menuHeight/2,10,1);
+
+        StdDraw.setPenColor(Color.orange);
+        StdDraw.filledRectangle(menuWidth/2,menuHeight/2,6,1);
 
         String winner = (player.getLives()>0) ? "Player 1":"Player 2";
-        Font font = new Font("Arial", Font.BOLD, 20);
+        Font font = new Font("HeadLineA", Font.PLAIN, 20);
         StdDraw.setFont(font);
         StdDraw.setPenColor(Color.darkGray);
         StdDraw.text(menuWidth/2,menuHeight/2,winner+" wins the game");
@@ -140,14 +147,17 @@ public class Engine {
 
     private void drawPlayerSelection(String player1, String player2) {
         StdDraw.clear(Color.darkGray);
-        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.picture(menuWidth/2,menuHeight/2,selectToDraw,menuWidth,menuHeight);
+        StdDraw.setPenColor(Color.white);
         Font smallFont = new Font("Arial", Font.BOLD, 15);
         StdDraw.setFont(smallFont);
         StdDraw.text(menuWidth/2, menuHeight - 1, "Player one: Boy(B) or Girl(G)");
         StdDraw.line(0, menuHeight - 2, menuWidth, menuHeight - 2);
+
+        StdDraw.setPenColor(Color.orange);
         StdDraw.filledRectangle(menuWidth/2,menuHeight*3/4,5,1);
 
-        Font font = new Font("Arial", Font.BOLD, 20);
+        Font font = new Font("HeadLineA", Font.PLAIN, 20);
         StdDraw.setFont(font);
         StdDraw.setPenColor(Color.darkGray);
         if(player1.equals("B")||player1.equals("b")) {
@@ -158,10 +168,12 @@ public class Engine {
             StdDraw.text(menuWidth/2,menuHeight*3/4,player1);
         }
 
-        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.setPenColor(Color.white);
         StdDraw.setFont(smallFont);
         StdDraw.text(menuWidth/2, menuHeight/2 - 1, "Player two: Boy(B) or Girl(G)");
         StdDraw.line(0, menuHeight/2 - 2, menuWidth, menuHeight/2 - 2);
+
+        StdDraw.setPenColor(Color.orange);
         StdDraw.filledRectangle(menuWidth/2,menuHeight*1/4,5,1);
 
         StdDraw.setFont(font);
@@ -190,7 +202,8 @@ public class Engine {
 
     private void drawLoad() {
         StdDraw.clear(Color.darkGray);
-        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.picture(menuWidth/2,menuHeight/2,seedToDraw,menuWidth,menuHeight);
+        StdDraw.setPenColor(Color.orange);
         Font smallFont = new Font("Arial", Font.BOLD, 15);
         StdDraw.setFont(smallFont);
         StdDraw.text(menuWidth/2, menuHeight - 1, "Loading...");
@@ -200,7 +213,7 @@ public class Engine {
 
 
     private void drawInstruction(String instruction) {
-        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.setPenColor(Color.white);
         Font smallFont = new Font("Monaco", Font.BOLD, 20);
         StdDraw.setFont(smallFont);
         StdDraw.text(WIDTH/2,HEIGHT+1,instruction);
@@ -238,9 +251,9 @@ public class Engine {
         String livesP2 = symbolP2.repeat(player2.getLives());
         if((int)StdDraw.mouseX()>=0&&(int)StdDraw.mouseX()<WIDTH&&(int)StdDraw.mouseY()>=0&&(int)StdDraw.mouseY()<HEIGHT) {
             if(!isSightRegion((int)StdDraw.mouseX(),(int)StdDraw.mouseY())) {
-                description = "Out of Sight";
+                description = "No Signal";
             } else if(isVirusRegion((int)StdDraw.mouseX(),(int)StdDraw.mouseY())) {
-                description = "Infected region";
+                description = "Coronavirus";
             } else {
                 description = frame[(int)StdDraw.mouseX()][(int)StdDraw.mouseY()].description();
             }
@@ -271,7 +284,7 @@ public class Engine {
             }
         }
 
-        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.setPenColor(Color.white);
         Font smallFont = new Font("Monaco", Font.BOLD, 20);
         StdDraw.setFont(smallFont);
         StdDraw.textLeft(1, HEIGHT + 2, "Player 1:"+livesP1+" "+rocksP1+" "+weaponsP1);
@@ -299,14 +312,17 @@ public class Engine {
 
     private void drawSeed(String seed) {
         StdDraw.clear(Color.darkGray);
-        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.picture(menuWidth/2,menuHeight/2,seedToDraw,menuWidth,menuHeight);
+        StdDraw.setPenColor(Color.white);
         Font smallFont = new Font("Arial", Font.BOLD, 15);
         StdDraw.setFont(smallFont);
         StdDraw.text(menuWidth/2, menuHeight - 1, "Enter a number finished with (S)");
         StdDraw.line(0, menuHeight - 2, menuWidth, menuHeight - 2);
+
+        StdDraw.setPenColor(Color.orange);
         StdDraw.filledRectangle(menuWidth/2,menuHeight/2,5,1);
 
-        Font font = new Font("Arial", Font.BOLD, 20);
+        Font font = new Font("HeadLineA", Font.PLAIN, 20);
         StdDraw.setFont(font);
         StdDraw.setPenColor(Color.darkGray);
         StdDraw.text(menuWidth/2,menuHeight/2,seed);
@@ -316,16 +332,33 @@ public class Engine {
     private void drawMain() {
         ter.initialize(menuWidth,menuHeight);
         StdDraw.clear(Color.darkGray);
-        Font title = new Font("Serif", Font.ITALIC, 20);
+        StdDraw.picture(menuWidth/2,menuHeight/2,imageToDraw,menuWidth,menuHeight);
+        StdDraw.setPenColor(Color.ORANGE);
+        StdDraw.filledRectangle(menuWidth/2,menuHeight*7/10,4.5,0.6);
+
+        Font title1 = new Font("HeadLineA", Font.PLAIN, 20);
+        Font title2 = new Font("HeadLineA", Font.PLAIN, 40);
+        Font title3 = new Font("Chalkduster",Font.PLAIN,20);
         Font menu = new Font("Arial", Font.BOLD, 15);
-        StdDraw.setFont(title);
-        StdDraw.setPenColor(Color.black);
-        StdDraw.text(menuWidth/2,menuHeight*7/10, "CS61B: COVID-19 SUCKS");
+        StdDraw.setFont(title1);
+        StdDraw.setPenColor(Color.darkGray);
+        StdDraw.text(menuWidth/2,menuHeight*7/10, "PLAYERUNKNOWN'S");
+        StdDraw.setFont(title2);
+        StdDraw.setPenColor(Color.orange);
+        StdDraw.text(menuWidth/2,menuHeight*6.35/10, "BATTLEGROUNDS");
+
+        StdDraw.setPenColor(new Color(200,37,37));
+        StdDraw.filledRectangle(menuWidth/2,menuHeight*5.9/10,3.5,0.6);
+
+        StdDraw.setFont(title3);
+        StdDraw.setPenColor(Color.darkGray);
+        StdDraw.text(menuWidth/2,menuHeight*5.9/10, "COVID-19");
+
         StdDraw.setFont(menu);
         StdDraw.setPenColor(Color.WHITE);
-        StdDraw.text(menuWidth/2,menuHeight/2,"NEW GAME (N)");
-        StdDraw.text(menuWidth/2,menuHeight*4/10,"LOAD GAME (L)");
-        StdDraw.text(menuWidth/2,menuHeight*3/10,"QUIT (Q)");
+        StdDraw.text(menuWidth/2,menuHeight*3/10,"NEW GAME (N)");
+        StdDraw.text(menuWidth/2,menuHeight*2.5/10,"LOAD GAME (L)");
+        StdDraw.text(menuWidth/2,menuHeight*2/10,"QUIT (Q)");
         StdDraw.show();
     }
 
@@ -409,7 +442,7 @@ public class Engine {
 
     private boolean randomWorldGenerate(TETile[][] board) {
         initializeBoard(board);
-        int roomNum = RandomUtils.uniform(RANDOM,8,14);
+        int roomNum = RandomUtils.uniform(RANDOM,12,18);
         List<Room> rooms = new ArrayList<>();
 
         for(int i=0;i<=roomNum;i++) {
@@ -451,6 +484,7 @@ public class Engine {
     }
 
     private boolean isSightRegion(int x, int y) {
+        /**
         if(x>=(player.getX()-player.getSightLevel())
                 &&x<=(player.getX()+player.getSightLevel())
                 &&y>=(player.getY()-player.getSightLevel())
@@ -464,10 +498,22 @@ public class Engine {
             return true;
         }
         return false;
+         */
+        if(distanceCal(x,y,player)<player.getSightLevel()) {
+            return true;
+        }
+        if(distanceCal(x,y,player2)<player2.getSightLevel()) {
+            return true;
+        }
+        return false;
+    }
+
+    private double distanceCal(int x, int y, Avatar p) {
+        return Math.sqrt(Math.pow(p.getX()-x,2)+Math.pow(p.getY()-y,2));
     }
 
     private void renderSun(TETile[][] board) {
-        int sunNum = RandomUtils.uniform(RANDOM,6,10);
+        int sunNum = RandomUtils.uniform(RANDOM,8,12);
         while(sunNum>0) {
             Point posSun = randomLanding(board);
             board[posSun.getX()][posSun.getY()] = Tileset.SUN;
@@ -804,24 +850,24 @@ public class Engine {
                 return targetPoints;
             case 2:
                 targetPoints.add(new Point(curX-1,curY+5));
-                targetPoints.add(new Point(curX-1,curY+5));
-                targetPoints.add(new Point(curX-1,curY+5));
+                targetPoints.add(new Point(curX,curY+5));
+                targetPoints.add(new Point(curX+1,curY+5));
+                targetPoints.add(new Point(curX-1,curY+4));
                 targetPoints.add(new Point(curX,curY+4));
-                targetPoints.add(new Point(curX,curY+4));
-                targetPoints.add(new Point(curX,curY+4));
-                targetPoints.add(new Point(curX+1,curY+3));
-                targetPoints.add(new Point(curX+1,curY+3));
+                targetPoints.add(new Point(curX+1,curY+4));
+                targetPoints.add(new Point(curX-1,curY+3));
+                targetPoints.add(new Point(curX,curY+3));
                 targetPoints.add(new Point(curX+1,curY+3));
                 return targetPoints;
             case 3:
                 targetPoints.add(new Point(curX-1,curY-5));
-                targetPoints.add(new Point(curX-1,curY-5));
-                targetPoints.add(new Point(curX-1,curY-5));
+                targetPoints.add(new Point(curX,curY-5));
+                targetPoints.add(new Point(curX+1,curY-5));
+                targetPoints.add(new Point(curX-1,curY-4));
                 targetPoints.add(new Point(curX,curY-4));
-                targetPoints.add(new Point(curX,curY-4));
-                targetPoints.add(new Point(curX,curY-4));
-                targetPoints.add(new Point(curX+1,curY-3));
-                targetPoints.add(new Point(curX+1,curY-3));
+                targetPoints.add(new Point(curX+1,curY-4));
+                targetPoints.add(new Point(curX-1,curY-3));
+                targetPoints.add(new Point(curX,curY-3));
                 targetPoints.add(new Point(curX+1,curY-3));
                 return targetPoints;
             default:
@@ -1016,8 +1062,8 @@ public class Engine {
             if(curRoom.getOccupiedWall().size()>=3) {
                 continue;
             }
-            //int neighborNum = RandomUtils.uniform(RANDOM,1,2);
-            int neighborNum = 1;
+            int neighborNum = RandomUtils.uniform(RANDOM,1,3);
+            //int neighborNum = 1;
             List<Room> newNeighbors = choices(rooms,curRoom,neighborNum);
             for(Room newNeighbor: newNeighbors) {
                 curRoom.addNeighbors(newNeighbor);
@@ -1364,6 +1410,17 @@ public class Engine {
         Engine engine = new Engine();
         engine.interactWithKeyboard();
 
+
+
+        /**
+        String fonts[] =
+                GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+
+        for ( int i = 0; i < fonts.length; i++ )
+        {
+            System.out.println(fonts[i]);
+        }
+        */
 
 
     }

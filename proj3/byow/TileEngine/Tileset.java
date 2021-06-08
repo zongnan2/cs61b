@@ -39,8 +39,8 @@ public class Tileset {
     public static final TETile HEART = new TETile('♡', Color.YELLOW, Color.black, "heart");
     public static final TETile BABYROCK = new TETile('☆', Color.CYAN, Color.black, "baby rock");
     public static final TETile ROCK = new TETile('◍', Color.CYAN, Color.black, "rock");
-    public static final TETile SUN = new TETile('◌', Color.yellow, Color.black, "sunlight");
-    public static final TETile MASK = new TETile(' ', Color.gray, Color.gray, "haze");
+    public static final TETile SUN = new TETile('◌', Color.yellow, Color.black, "radar");
+    public static final TETile MASK = new TETile('☹', Color.darkGray, Color.gray, "haze");
     public static final TETile GRENADE = new TETile('☢', Color.orange, Color.black, "grenade");
     public static final TETile LASER = new TETile('❂', Color.orange, Color.black, "laser");
 }

@@ -16,7 +16,7 @@ public class Avatar {
     private final int degreeMax = 5;
     private int rocks;
     private Point next;
-    private int sightLevel;
+    private double sightLevel;
     private List<String> weapon;
 
     public Avatar(int X, int Y) {
@@ -26,7 +26,7 @@ public class Avatar {
         this.degreeInfect = 0;
         this.rocks = 0;
         this.next = new Point(X,Y);
-        this.sightLevel = 3;
+        this.sightLevel = 4.0;
         weapon = new ArrayList<>();
     }
 
@@ -50,7 +50,7 @@ public class Avatar {
         return next;
     }
 
-    public int getSightLevel() {
+    public double getSightLevel() {
         return sightLevel;
     }
 
@@ -86,7 +86,7 @@ public class Avatar {
     }
 
     public void upSightLevel() {
-        sightLevel++;
+        sightLevel = sightLevel + 2;
     }
 
     public void addWeapon(String w) {

@@ -143,7 +143,7 @@ public class TETile {
     }
 
     public static TETile backOrange(TETile t) {
-        return new TETile(t.character, t.textColor, Color.orange, t.description, t.filepath);
+        return new TETile('●', Color.orange, t.backgroundColor, t.description, t.filepath);
     }
 
     private static int newColorValue(int v, int dv, Random r) {
