@@ -1,3 +1,3 @@
 # cs61b 
 
-lab works and setup stuffs
+labs/hws/projects
